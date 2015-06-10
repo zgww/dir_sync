@@ -12,12 +12,12 @@ l += -Llib
 flags += -std=c99 
 
 
-all : $(out) run
+all : build run
 
 run : 
 	@$(out) src to_src
 
-$(out) : $(obj)
+build : $(obj)
 	@mkdir -p $(dir $(out))
 	gcc -s -o $(out) $^ $(flags) $(l)
 
