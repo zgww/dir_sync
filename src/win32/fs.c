@@ -187,6 +187,18 @@ long long fs_mtime_(const char *file_path){
 
 	return ms;
 }
+long long fs_size_(const char *file_path){
+	WIN32_FIND_DATA ffd ;
+	HANDLE find = FindFirstFile(file_path, &ffd);
+
+	if (INVALID_HANDLE_VALUE == find) return -1L;
+
+	long long size = (ffd.nFileSizeHigh * (MAXDWORD + 1)) + ffd.nFileSizeLow;
+
+	FindClose(find);
+
+	return size;
+}
 int fs_mkdir(const char *dir){
 	if (fs_exist(dir)) return 0;
 	return _mkdir(dir);

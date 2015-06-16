@@ -9,6 +9,7 @@
 struct file_info {
 	char *file;
 	long long mtime;// ms
+	long long size;
 	int is_dir;
 };
 
@@ -26,6 +27,7 @@ static void load_files_info(const char *path, struct list *out){
 		file_info.file = cur;
 		file_info.mtime = fs_mtime_(cur);
 		file_info.is_dir = fs_is_dir(cur);
+		file_info.size = fs_size_(cur);
 		list_add(out, &file_info);
 	}
 	list_fini(&files, NULL);
@@ -74,7 +76,7 @@ int main(int argc, char **argv){
 				printf("copyfile : %s => %s\n", cur->file, file);
 				fs_copy_file(cur->file, file);
 			}
-		} else if (cur->mtime > f->mtime) { // update to des
+		} else if (cur->mtime > f->mtime || cur->size != f->size) { // update to des
 			if (!cur->is_dir) {
 				printf("copyfile : %s => %s\n", cur->file, file);
 				fs_copy_file(cur->file, file);

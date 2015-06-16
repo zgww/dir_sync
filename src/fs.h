@@ -23,6 +23,7 @@ int fs_mkdir(const char *dir);
 long long fs_mtime_(const char *file_path);
 int fs_rmdir(const char *path);
 int fs_rmfile(const char *path);
+long long fs_size_(const char *file_path);
 int fs_copy_file(const char *from, const char *to);
 
 // list files and dirs in dir
